@@ -6,6 +6,7 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 
 import SocketServer
 import sys
+import os
 
 
 class EchoHandler(SocketServer.DatagramRequestHandler):
@@ -19,8 +20,8 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
         line = self.rfile.read()
         line2 = line.split(" ")
         if line2[0] == "INVITE":
-            self.wfile.write("SIP/2.0 100 TRYING" + '\r\n' + "SIP/2.0 180 RING" 
-                                + '\r\n' + "SIP/2.0 200 OK" + '\r\n\r\n')
+            self.wfile.write("SIP/2.0 100 TRYING" + '\r\n\r\n' +
+            "SIP/2.0 180 RING" + '\r\n\r\n' + "SIP/2.0 200 OK" + '\r\n\r\n')
         elif line2[0] == "BYE":
             self.wfile.write("SIP/2.0 200 OK" + '\r\n\r\n')
         elif line2[0] == "ACK":
