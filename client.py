@@ -34,7 +34,7 @@ elif METODO == "BYE":
 	LINE = "BYE sip:" + LOGIN + "@" + IP + " SIP/2.0" + '\r\n'
 
 print "Enviando: " + LINE
-my_socket.send(LINE + '\r\n') #poner bien los \r\n
+my_socket.send(LINE + '\r\n') 
 
 try:
 	data = my_socket.recv(1024)
@@ -46,7 +46,7 @@ if METODO == "INVITE":
 	datos = data.split(" ")
 	if int(datos[1]) == 100 and int(datos[5]) == 180 and int(datos[9]) == 200:
 	    LINE = "ACK sip:" + LOGIN + "@" + IP + " SIP/2.0"
-	    my_socket.send(LINE + '\r\n')
+	    my_socket.send(LINE + '\r\n\r\n')
 
 print "Terminando socket..."
 
