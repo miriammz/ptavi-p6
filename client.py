@@ -27,6 +27,7 @@ my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 my_socket.connect((IP, PORT))
 
+LINE = ""
 #creamos LINE segun el tipo del metodo que pasamos como argumento
 if METODO == "INVITE":
     LINE = "INVITE sip:" + LOGIN + "@" + IP + " SIP/2.0" + '\r\n'
@@ -44,7 +45,8 @@ except socket.error:
 
 if METODO == "INVITE":
     datos = data.split(" ")
-    if int(datos[1]) == 100 and int(datos[5]) == 180 and int(datos[9]) == 200:
+    if int(datos[1]) == 100: #and int(datos[4]) == 180 and int(datos[7]) == 200:
+    	print "Enviando: " + LINE
         LINE = "ACK sip:" + LOGIN + "@" + IP + " SIP/2.0"
         my_socket.send(LINE + '\r\n\r\n')
 
