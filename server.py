@@ -16,12 +16,11 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
 
     def handle(self):
         # Escribe dirección y puerto del cliente (de tupla client_address)
-        #self.wfile.write("Hemos recibido tu peticion") #no hay que imprimirlo
         line = self.rfile.read()
         IP = self.client_address[0]
         PUERTO = str(self.client_address[1])
-        #FICH_AUDIO = str(self.client_address[2])
         line2 = line.split(" ")
+        print "El cliente nos manda " + line
         if line2[0] == "INVITE":
             self.wfile.write("SIP/2.0 100 TRYING" + '\r\n\r\n' +
                              "SIP/2.0 180 RING" + '\r\n\r\n' +
@@ -38,18 +37,15 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
             self.wfile.write("SIP/2.0 405 Method Not Allowed")
         else:
             self.wfile.write("SIP/2.0 400 Bad Request")
-        # Leyendo línea a línea lo que nos envía el cliente
         while 1:
-            print "El cliente nos manda " + line
             # Si no hay más líneas salimos del bucle infinito
-            #print "hola"
             if not line or line2:
                 break
 
 if __name__ == "__main__":
     # Comprobamos que introducimos el numero correcto de parametros y que
     # existe el fichero de audio
-    if len(sys.argv) != 4:  # and not encontrado:
+    if len(sys.argv) != 4:
         sys.exit("Usage: python server.py IP port audio_file")
 
     # Creamos servidor de eco y escuchamos
