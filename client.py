@@ -45,10 +45,12 @@ except socket.error:
 
 if METODO == "INVITE":
     datos = data.split(" ")
-    if int(datos[1]) == 100: #and int(datos[4]) == 180 and int(datos[7]) == 200:
-    	print "Enviando: " + LINE
+    if int(datos[1]) == 100 and int(datos[3]) == 180 and int(datos[5]) == 200:
         LINE = "ACK sip:" + LOGIN + "@" + IP + " SIP/2.0"
+        print "Enviando: " + LINE
         my_socket.send(LINE + '\r\n\r\n')
+        data = my_socket.recv(1024)
+        print 'Recibido -- ', data
 
 print "Terminando socket..."
 
