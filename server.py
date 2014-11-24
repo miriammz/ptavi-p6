@@ -24,11 +24,11 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
         line2 = line.split(" ")
         if line2[0] == "INVITE":
             self.wfile.write("SIP/2.0 100 TRYING" + '\r\n\r\n' +
-            "SIP/2.0 180 RING" + '\r\n\r\n' + "SIP/2.0 200 OK" + '\r\n\r\n')
+                             "SIP/2.0 180 RING" + '\r\n\r\n' +
+                             "SIP/2.0 200 OK" + '\r\n\r\n')
         elif line2[0] == "BYE":
             self.wfile.write("SIP/2.0 200 OK" + '\r\n\r\n')
         elif line2[0] == "ACK":
-            print "estoy aquii"
             self.wfile.write("SIP/2.0 200 OK" + '\r\n\r\n')
             encontrado = "./mp32rtp -i " + IP + " -p 23032 < " + FICH_AUDIO
             print "Enviando audio..."
@@ -39,17 +39,17 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
         else:
             self.wfile.write("SIP/2.0 400 Bad Request")
         # Leyendo línea a línea lo que nos envía el cliente
-        print "El cliente nos manda " + line
         while 1:
+            print "El cliente nos manda " + line
             # Si no hay más líneas salimos del bucle infinito
             #print "hola"
             if not line or line2:
                 break
 
 if __name__ == "__main__":
-    # Comprobamos que introducimos el numero correcto de parametros y que existe
-    # el fichero de audio 
-    if len(sys.argv) != 4: # and not encontrado:
+    # Comprobamos que introducimos el numero correcto de parametros y que
+    # existe el fichero de audio
+    if len(sys.argv) != 4:  # and not encontrado:
         sys.exit("Usage: python server.py IP port audio_file")
 
     # Creamos servidor de eco y escuchamos
