@@ -23,7 +23,7 @@ class EchoHandler(SocketServer.DatagramRequestHandler):
         print "El cliente nos manda " + line
         if line2[0] == "INVITE":
             self.wfile.write("SIP/2.0 100 TRYING" + '\r\n\r\n' +
-                             "SIP/2.0 180 RING" + '\r\n\r\n' +
+                             "SIP/2.0 180 RINGING" + '\r\n\r\n' +
                              "SIP/2.0 200 OK" + '\r\n\r\n')
         elif line2[0] == "BYE":
             self.wfile.write("SIP/2.0 200 OK" + '\r\n\r\n')
