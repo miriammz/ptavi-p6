@@ -44,8 +44,11 @@ except socket.error:
     sys.exit("Error: No server listening at " + IP + " port " + str(PORT))
 
 if METODO == "INVITE":
-    datos = data.split(" ")
-    if int(datos[1]) == 100 and int(datos[3]) == 180 and int(datos[5]) == 200:
+    #Cambio comprobación del mensaje recibido del servidor por una mejor
+    processed_data = data.split('\r\n\r\n')
+    if processed_data[0] == "SIP/2.0 100 Trying" and\
+    processed_data[1] == "SIP/2.0 180 Ringing" and\
+    processed_data[2] == "SIP/2.0 200 OK":
         LINE = "ACK sip:" + LOGIN + "@" + IP + " SIP/2.0"
         print "Enviando: " + LINE
         my_socket.send(LINE + '\r\n\r\n')
